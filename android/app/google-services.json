@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "124874818245",
+    "project_id": "wallpaper-getx",
+    "storage_bucket": "wallpaper-getx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124874818245:android:250e4a1e44ca9eb7f5a6ac",
+        "android_client_info": {
+          "package_name": "com.example.wallpaper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124874818245-jtlk18b0iqsukenp392b4nu1vtp0dfh3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8MTN_8bfKplIOzRQChipvy51JKETppR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124874818245-jtlk18b0iqsukenp392b4nu1vtp0dfh3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
