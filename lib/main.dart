@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:wallpaper/controllers/auth_controller.dart';
+import 'package:wallpaper/controllers/home_controller.dart';
 import 'package:wallpaper/screens/screens.dart';
 import 'package:wallpaper/utils/utils.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp().then((value) => Get.put(AuthController()));
+  await Firebase.initializeApp().then((value) => Get.put(HomeController()));
   runApp(const MyApp());
 }
 

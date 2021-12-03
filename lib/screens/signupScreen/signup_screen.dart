@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:wallpaper/controllers/auth_controller.dart';
+import 'package:wallpaper/controllers/home_controller.dart';
 import 'package:wallpaper/screens/screens.dart';
 import 'package:wallpaper/utils/utils.dart';
 
-class SignupScreen extends StatelessWidget {
-  const SignupScreen({Key? key}) : super(key: key);
-
+class SignupScreen extends GetView<HomeController> {
+  SignupScreen({Key? key}) : super(key: key);
+  final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _retypePasswordController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +103,7 @@ class SignupScreen extends StatelessWidget {
                               height: 16.h,
                             ),
                             Form(
-                              key: AuthController.instance.loginFormKey,
+                              key: _loginFormKey,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               child: Column(
@@ -120,17 +124,12 @@ class SignupScreen extends StatelessWidget {
                                           focusColor: Colors.black,
                                           hintText: "Email",
                                         ),
-                                        controller: AuthController
-                                            .instance.emailController,
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        onSaved: (value) {
-                                          AuthController.instance.email =
-                                              value!;
-                                        },
+                                        controller: _emailController,
+                                        // onSaved: (value) {
+                                        //   controller.email = value!;
+                                        // },
                                         validator: (value) {
-                                          return AuthController.instance
-                                              .validateEmail(value!);
+                                          return _validateEmail(value!);
                                         },
                                       ),
                                     ),
@@ -151,17 +150,12 @@ class SignupScreen extends StatelessWidget {
                                           focusColor: Colors.black,
                                           hintText: "Password",
                                         ),
-                                        controller: AuthController
-                                            .instance.passwordController,
-                                        keyboardType:
-                                            TextInputType.visiblePassword,
-                                        onSaved: (value) {
-                                          AuthController.instance.password =
-                                              value!;
-                                        },
+                                        controller: _passwordController,
+                                        // onSaved: (value) {
+                                        //   controller.password = value!;
+                                        // },
                                         validator: (value) {
-                                          return AuthController.instance
-                                              .validatePassword(value!);
+                                          return _validatePassword(value!);
                                         },
                                       ),
                                     ),
@@ -181,17 +175,13 @@ class SignupScreen extends StatelessWidget {
                                           focusColor: Colors.black,
                                           hintText: "Retpe Password",
                                         ),
-                                        controller: AuthController
-                                            .instance.retypePasswordController,
-                                        keyboardType:
-                                            TextInputType.visiblePassword,
-                                        onSaved: (value) {
-                                          AuthController
-                                              .instance.retypePassword = value!;
-                                        },
+                                        controller: _retypePasswordController,
+                                        // onSaved: (value) {
+                                        //   controller.retypePassword = value!;
+                                        // },
                                         validator: (value) {
-                                          return AuthController.instance
-                                              .validateRetypePassword(value!);
+                                          return _validateRetypePassword(
+                                              value!);
                                         },
                                       ),
                                     ),
@@ -207,7 +197,9 @@ class SignupScreen extends StatelessWidget {
                                             .copyWith(color: Colors.black),
                                       ),
                                       onPressed: () {
-                                        AuthController.instance.checkLogin();
+                                        _checkLogin();
+                                        controller.signUp(_emailController.text,
+                                            _passwordController.text);
                                       },
                                     ),
                                   ),
@@ -260,5 +252,34 @@ class SignupScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String? _validateEmail(String value) {
+    if (!GetUtils.isEmail(value)) {
+      return "Provide valid Email";
+    }
+    return null;
+  }
+
+  String? _validatePassword(String value) {
+    if (value.length < 6) {
+      return "Password must be of 6 characters";
+    }
+    return null;
+  }
+
+  String? _validateRetypePassword(String value) {
+    if (value != _passwordController.text) {
+      return "Passwords do not match";
+    }
+    return null;
+  }
+
+  void _checkLogin() {
+    final isValid = _loginFormKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    _loginFormKey.currentState!.save();
   }
 }

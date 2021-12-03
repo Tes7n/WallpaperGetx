@@ -1,62 +1,62 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wallpaper/screens/screens.dart';
 
 class AuthController extends GetxController {
-  static AuthController instance = Get.find();
-  GlobalKey<FormState>? loginFormKey;
+  late Rx<User?> _user;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
-  late TextEditingController emailController,
-      passwordController,
-      retypePasswordController;
-  var email = '';
-  var password = '';
-  var retypePassword = '';
   @override
   void onInit() {
     super.onInit();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    retypePasswordController = TextEditingController();
   }
 
   @override
   void onReady() {
     super.onReady();
+    _user = Rx<User?>(auth.currentUser);
+    _user.bindStream(auth.userChanges());
+    ever(_user, _initialScreen);
   }
 
   @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    retypePasswordController.dispose();
+  void onClose() {}
+
+  _initialScreen(User? user) {
+    if (user == null) {
+      Get.offAll(() => AuthScreen());
+    } else {
+      Get.offAll(() => HomeScreen());
+    }
   }
 
-  String? validateEmail(String value) {
-    if (!GetUtils.isEmail(value)) {
-      return "Provide valid Email";
+  void signUp(String email, password) async {
+    try {
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } catch (e) {
+      Get.snackbar('Firebase', e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.white70,
+          colorText: Colors.black);
+      print(e.toString());
     }
-    return null;
   }
 
-  String? validatePassword(String value) {
-    if (value.length < 6) {
-      return "Password must be of 6 characters";
+  void signIn(String email, password) async {
+    try {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+    } catch (e) {
+      Get.snackbar('Firebase', e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.white70,
+          colorText: Colors.black);
+      print(e.toString());
     }
-    return null;
   }
 
-  String? validateRetypePassword(String value) {
-    if (value != passwordController.text) {
-      return "Passwords do not match";
-    }
-    return null;
-  }
-
-  void checkLogin() {
-    final isValid = loginFormKey!.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
-    loginFormKey!.currentState!.save();
+  void signOut() async {
+    await auth.signOut();
   }
 }

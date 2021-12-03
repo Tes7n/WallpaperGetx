@@ -100,7 +100,7 @@ class AuthScreen extends StatelessWidget {
                                     .copyWith(color: Colors.black),
                               ),
                               onPressed: () {
-                                Get.off(() => LoginScreen());
+                                Get.off(() => SignupScreen());
                               },
                             ),
                           ),
