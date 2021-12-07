@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:wallpaper/controllers/home_controller.dart';
+import 'package:wallpaper/controllers/controllers.dart';
+
 import 'package:wallpaper/screens/screens.dart';
 import 'package:wallpaper/utils/utils.dart';
 
-class LoginScreen extends GetView<HomeController> {
+class LoginScreen extends GetView<AuthController> {
+//TODO :Create Validation controller
+
   LoginScreen({Key? key}) : super(key: key);
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -124,9 +127,6 @@ class LoginScreen extends GetView<HomeController> {
                                           hintText: "Email",
                                         ),
                                         controller: _emailController,
-                                        // onSaved: (value) {
-                                        //   controller.email = value!;
-                                        // },
                                         validator: (value) {
                                           return _validateEmail(value!);
                                         },
@@ -150,9 +150,6 @@ class LoginScreen extends GetView<HomeController> {
                                           hintText: "Password",
                                         ),
                                         controller: _passwordController,
-                                        // onSaved: (value) {
-                                        //   controller.password = value!;
-                                        // },
                                         validator: (value) {
                                           return _validatePassword(value!);
                                         },

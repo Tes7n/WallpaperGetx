@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:wallpaper/controllers/home_controller.dart';
+import 'package:wallpaper/controllers/controllers.dart';
+
 import 'package:wallpaper/screens/screens.dart';
 import 'package:wallpaper/utils/utils.dart';
 
-class SignupScreen extends GetView<HomeController> {
+class SignupScreen extends GetView<AuthController> {
+  //TODO :Create Validation controller
+
   SignupScreen({Key? key}) : super(key: key);
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -125,9 +128,6 @@ class SignupScreen extends GetView<HomeController> {
                                           hintText: "Email",
                                         ),
                                         controller: _emailController,
-                                        // onSaved: (value) {
-                                        //   controller.email = value!;
-                                        // },
                                         validator: (value) {
                                           return _validateEmail(value!);
                                         },
@@ -151,9 +151,6 @@ class SignupScreen extends GetView<HomeController> {
                                           hintText: "Password",
                                         ),
                                         controller: _passwordController,
-                                        // onSaved: (value) {
-                                        //   controller.password = value!;
-                                        // },
                                         validator: (value) {
                                           return _validatePassword(value!);
                                         },
@@ -176,9 +173,6 @@ class SignupScreen extends GetView<HomeController> {
                                           hintText: "Retpe Password",
                                         ),
                                         controller: _retypePasswordController,
-                                        // onSaved: (value) {
-                                        //   controller.retypePassword = value!;
-                                        // },
                                         validator: (value) {
                                           return _validateRetypePassword(
                                               value!);

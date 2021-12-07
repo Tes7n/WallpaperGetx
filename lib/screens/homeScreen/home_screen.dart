@@ -1,38 +1,123 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:wallpaper/controllers/auth_controller.dart';
-import 'package:wallpaper/controllers/home_controller.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
+
+import 'package:wallpaper/controllers/controllers.dart';
+
 import 'package:wallpaper/utils/utils.dart';
 
-class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({Key? key}) : super(key: key);
+import '../../utils/widgets/custom_drawer.dart';
+
+class HomeScreen extends StatelessWidget {
+  // final HomeController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('home'),
-        backgroundColor: Colors.black,
-      ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.only(top: 13.h),
-          child: CustomElevatedButton(
-            child: Text(
-              "Logout",
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4!
-                  .copyWith(color: Colors.black),
-            ),
-            onPressed: () {
-              print('pressed');
-              controller.signOut();
-            },
+    return SafeArea(
+      child: Stack(
+        children: [
+          Scaffold(
+            // key: controller.scaffoldKey,
+            backgroundColor: Colors.black,
+            // drawer: CustomDrawer(),
+            // onDrawerChanged: (value) {
+            //   controller.checkDrawer();
+            // },
+            body: Builder(builder: (context) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+                child: Column(
+                  children: [
+                    SizedBox(height: 15.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            // Scaffold.of(context).openDrawer();
+                          },
+                          icon: Icon(
+                            Icons.menu,
+                            size: 30.h,
+                            color: MColors.mgrey,
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                right: 12.w, left: 12.w, top: 10.h),
+                            child: TextField(
+                              autofocus: false,
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                color: MColors.mlgrey,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: "e.g. Animal",
+                                hintStyle: const TextStyle(
+                                  fontSize: 16.0,
+                                  color: MColors.mgrey,
+                                ),
+                                suffixIcon: const Icon(
+                                  Icons.search_outlined,
+                                  color: Color(0xff9D9C9C),
+                                  size: 25.0,
+                                ),
+                                isDense: true,
+                                filled: true,
+                                fillColor:
+                                    const Color(0xFF3A3A3A).withOpacity(0.7),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xff9D9C9C),
+                                    width: 1.0,
+                                  ),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                              ),
+                              cursorColor: const Color(0xff9D9C9C),
+                              cursorHeight: 25.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Expanded(
+                      child: StaggeredGridView.countBuilder(
+                        crossAxisCount: 2,
+                        itemCount: imageList.length,
+                        itemBuilder: (context, index) => WallpaperCard(
+                          imageData: imageList[index],
+                        ),
+                        staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+                        mainAxisSpacing: 15.h,
+                        crossAxisSpacing: 25.w,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
           ),
-        ),
+          // controller.isDrawerOpen.isTrue
+          //     ? SizedBox(
+          //         height: 1.h,
+          //       )
+          //     :
+          const Hero(
+            tag: "navBar",
+            child: NavBar(
+              pageIndex: 0,
+            ),
+          ),
+        ],
       ),
     );
   }

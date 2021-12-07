@@ -4,3 +4,6 @@ export 'authScreen/auth_screen.dart';
 export 'signupScreen/signup_screen.dart';
 export 'loginScreen/login_screen.dart';
 export 'homeScreen/home_screen.dart';
+export 'profile_screen.dart';
+export 'sell_screen.dart';
+export 'wallpaper_screen.dart';

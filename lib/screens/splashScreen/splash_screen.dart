@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallpaper/screens/screens.dart';
 
 class SplashScreen extends StatefulWidget {
+  //TODO :Create Transition and fade animation
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
