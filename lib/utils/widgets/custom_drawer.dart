@@ -51,7 +51,20 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 Wrap(
                   spacing: 20.w,
-                  children: [ChoiceChipList(chipList)],
+                  children: [
+                    DrawerChip(title: 'Buildings'),
+                    DrawerChip(title: '3D'),
+                    DrawerChip(title: 'Abstract'),
+                    DrawerChip(title: 'Luxurious'),
+                    DrawerChip(title: 'Building'),
+                    DrawerChip(title: 'Food'),
+                    DrawerChip(title: 'Car'),
+                    DrawerChip(title: 'Animal'),
+                    DrawerChip(title: 'Flower'),
+                    DrawerChip(title: 'Airoplane'),
+                    DrawerChip(title: 'Insects'),
+                    DrawerChip(title: 'Architecture'),
+                  ],
                 ),
                 Expanded(
                   child: SizedBox(
@@ -74,34 +87,24 @@ class CustomDrawer extends StatelessWidget {
   }
 }
 
-class DrwrChip extends StatelessWidget {
+class DrawerChip extends StatelessWidget {
   final String title;
-  bool isSelected = false;
 
-  DrwrChip({
-    // Key? key,
+  DrawerChip({
     required this.title,
-  })
-  // : super(key: key)
-  ;
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ChoiceChip(
-      selected: isSelected,
-      onSelected: (bool selected) {
-        isSelected = selected;
-      },
+    return Chip(
       visualDensity: const VisualDensity(vertical: -2.0),
-      backgroundColor: isSelected
-          ? MColors.mblack.withOpacity(0.85)
-          : MColors.mblack.withOpacity(.6),
+      backgroundColor: MColors.mblack.withOpacity(.6),
       label: Text(
         title,
-        style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 14.sp),
+        style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 16.sp),
       ),
       shape: RoundedRectangleBorder(
-        side: const BorderSide(color: MColors.mgrey, width: 1),
+        side: const BorderSide(color: MColors.mdgrey, width: 1),
         borderRadius: BorderRadius.circular(8),
       ),
     );

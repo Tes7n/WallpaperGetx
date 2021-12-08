@@ -6,3 +6,4 @@ export 'widgets/el_button.dart';
 export 'widgets/choice_chip_list.dart';
 export 'widgets/nav_bar.dart';
 export 'widgets/wallpaper_card.dart';
+export 'widgets/custom_drawer.dart';

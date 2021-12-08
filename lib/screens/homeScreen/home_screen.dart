@@ -16,12 +16,11 @@ class HomeScreen extends StatelessWidget {
       child: Stack(
         children: [
           Scaffold(
-            // key: controller.scaffoldKey,
             backgroundColor: Colors.black,
-            // drawer: CustomDrawer(),
-            // onDrawerChanged: (value) {
-            //   controller.checkDrawer();
-            // },
+            drawer: CustomDrawer(),
+            onDrawerChanged: (value) {
+              controller.drawerChanged();
+            },
             body: Builder(builder: (context) {
               return Padding(
                 padding: EdgeInsets.symmetric(
@@ -35,7 +34,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {
-                            // Scaffold.of(context).openDrawer();
+                            Scaffold.of(context).openDrawer();
                           },
                           icon: Icon(
                             Icons.menu,
@@ -116,16 +115,17 @@ class HomeScreen extends StatelessWidget {
               );
             }),
           ),
-          // controller.isDrawerOpen.isTrue
-          //     ? SizedBox(
-          //         height: 1.h,
-          //       )
-          //     :
-          const Hero(
-            tag: "navBar",
-            child: NavBar(
-              pageIndex: 0,
-            ),
+          Obx(
+            () => controller.isDrawerOpen.value
+                ? SizedBox(
+                    height: 1.h,
+                  )
+                : const Hero(
+                    tag: "navBar",
+                    child: NavBar(
+                      pageIndex: 0,
+                    ),
+                  ),
           ),
         ],
       ),

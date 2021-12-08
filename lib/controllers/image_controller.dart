@@ -5,6 +5,7 @@ import 'package:wallpaper/services/api_service.dart';
 class ImageController extends GetxController {
   var isLoading = true.obs;
   final List<ImageModel> productList = <ImageModel>[].obs;
+  var isDrawerOpen = false.obs;
 
   @override
   void onInit() {
@@ -21,5 +22,9 @@ class ImageController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  void drawerChanged() {
+    isDrawerOpen.value = !isDrawerOpen.value;
   }
 }
