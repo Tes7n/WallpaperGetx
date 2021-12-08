@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-
 import 'package:wallpaper/controllers/controllers.dart';
-
 import 'package:wallpaper/utils/utils.dart';
 
-import '../../utils/widgets/custom_drawer.dart';
-
 class HomeScreen extends StatelessWidget {
-  // final HomeController controller = Get.find();
+  final ImageController controller = Get.find();
+
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +24,12 @@ class HomeScreen extends StatelessWidget {
             // },
             body: Builder(builder: (context) {
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.w,
+                ),
                 child: Column(
                   children: [
-                    SizedBox(height: 15.h),
+                    SizedBox(height: 10.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -90,16 +90,26 @@ class HomeScreen extends StatelessWidget {
                       height: 15.h,
                     ),
                     Expanded(
-                      child: StaggeredGridView.countBuilder(
-                        crossAxisCount: 2,
-                        itemCount: imageList.length,
-                        itemBuilder: (context, index) => WallpaperCard(
-                          imageData: imageList[index],
-                        ),
-                        staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-                        mainAxisSpacing: 15.h,
-                        crossAxisSpacing: 25.w,
-                      ),
+                      child: Obx(() {
+                        if (controller.isLoading.isTrue) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: MColors.mgrey,
+                            ),
+                          );
+                        } else {
+                          return StaggeredGridView.countBuilder(
+                            crossAxisCount: 2,
+                            itemCount: controller.productList.length,
+                            itemBuilder: (context, index) => WallpaperCard(
+                                imageModel: controller.productList[index]),
+                            staggeredTileBuilder: (index) =>
+                                const StaggeredTile.fit(1),
+                            mainAxisSpacing: 15.h,
+                            crossAxisSpacing: 25.w,
+                          );
+                        }
+                      }),
                     ),
                   ],
                 ),

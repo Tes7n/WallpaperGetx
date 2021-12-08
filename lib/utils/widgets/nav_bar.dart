@@ -27,7 +27,7 @@ class NavBar extends StatelessWidget {
               unselectedItemColor: Colors.grey[400],
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              backgroundColor: MColors.mdgrey,
+              backgroundColor: Colors.grey[800]!.withOpacity(0.9),
               onTap: (int index) {
                 Get.offAndToNamed("/$index");
               },

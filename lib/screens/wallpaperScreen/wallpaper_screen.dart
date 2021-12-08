@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:wallpaper/models/models.dart';
 import 'package:wallpaper/utils/utils.dart';
 
 class WallpaperScreen extends StatelessWidget {
-  final ImageData imageData;
+  final ImageModel imageModel;
 
-  WallpaperScreen({required this.imageData});
+  const WallpaperScreen({required this.imageModel});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,10 +46,10 @@ class WallpaperScreen extends StatelessWidget {
                       fit: StackFit.expand,
                       children: [
                         Hero(
-                          tag: imageData.imageUrl,
+                          tag: imageModel.id,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8.r),
-                            child: Image.network(imageData.imageUrl,
+                            child: Image.network(imageModel.urls.regular,
                                 fit: BoxFit.cover),
                           ),
                         ),

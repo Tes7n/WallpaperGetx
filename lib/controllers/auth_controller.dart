@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wallpaper/screens/screens.dart';
+import 'package:wallpaper/services/api_service.dart';
 
 class AuthController extends GetxController {
   late Rx<User?> _user;
