@@ -15,7 +15,7 @@ class AuthScreen extends StatelessWidget {
           constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/w1.png'), fit: BoxFit.cover),
+                image: AssetImage('assets/images/w2.png'), fit: BoxFit.cover),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,7 +100,8 @@ class AuthScreen extends StatelessWidget {
                                     .copyWith(color: Colors.black),
                               ),
                               onPressed: () {
-                                Get.off(() => SignupScreen());
+                                Get.off(() => SignupScreen(),
+                                    transition: Transition.leftToRight);
                               },
                             ),
                           ),
@@ -124,7 +125,8 @@ class AuthScreen extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                Get.offAll(() => LoginScreen());
+                                Get.offAll(() => LoginScreen(),
+                                    transition: Transition.rightToLeft);
                               },
                               child: Text(
                                 "Login now",

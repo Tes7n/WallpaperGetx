@@ -8,7 +8,10 @@ import 'controllers/controllers.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp().then((value) => Get.put(ImageController()));
+  await Firebase.initializeApp().then((value) {
+    Get.put(ImageController());
+    Get.put(AuthController());
+  });
 
   runApp(MyApp());
 }
@@ -25,14 +28,15 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: theme(),
         getPages: [
-          GetPage(
-            name: '/0',
-            page: () => HomeScreen(),
-          ),
+          GetPage(name: '/splash', page: () => SplashScreen()),
+          GetPage(name: '/auth', page: () => const AuthScreen()),
+          GetPage(name: '/signup', page: () => SignupScreen()),
+          GetPage(name: '/login', page: () => LoginScreen()),
+          GetPage(name: '/0', page: () => HomeScreen()),
           GetPage(name: '/1', page: () => const SellScreen()),
           GetPage(name: '/2', page: () => const ProfileScreen()),
         ],
-        initialRoute: '/0',
+        initialRoute: '/splash',
       ),
       designSize: const Size(360, 640),
     );

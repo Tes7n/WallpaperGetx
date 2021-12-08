@@ -6,14 +6,15 @@ import 'package:wallpaper/controllers/controllers.dart';
 import 'package:wallpaper/screens/screens.dart';
 import 'package:wallpaper/utils/utils.dart';
 
-class LoginScreen extends GetView<AuthController> {
-//TODO :Create Validation controller
+class SignupScreen extends GetView<AuthController> {
+  //TODO :Create Validation controller
 
-  LoginScreen({Key? key}) : super(key: key);
+  SignupScreen({Key? key}) : super(key: key);
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  final TextEditingController _retypePasswordController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +23,7 @@ class LoginScreen extends GetView<AuthController> {
           constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/w1.png'), fit: BoxFit.cover),
+                image: AssetImage('assets/images/w2.png'), fit: BoxFit.cover),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -102,7 +103,7 @@ class LoginScreen extends GetView<AuthController> {
                               ),
                             ),
                             SizedBox(
-                              height: 60.h,
+                              height: 16.h,
                             ),
                             Form(
                               key: _loginFormKey,
@@ -157,20 +158,51 @@ class LoginScreen extends GetView<AuthController> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(top: 13.h),
-                                    child: CustomElevatedButton(
-                                      child: Text(
-                                        "Login",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline4!
-                                            .copyWith(color: Colors.black),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 5.h),
+                                    child: Center(
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              borderSide: BorderSide.none),
+                                          focusColor: Colors.black,
+                                          hintText: "Retpe Password",
+                                        ),
+                                        controller: _retypePasswordController,
+                                        validator: (value) {
+                                          return _validateRetypePassword(
+                                              value!);
+                                        },
                                       ),
-                                      onPressed: () {
-                                        _checkLogin();
-                                        controller.signIn(_emailController.text,
-                                            _passwordController.text);
-                                      },
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 13.h),
+                                    child: Obx(
+                                      () => controller.isLoading.isTrue
+                                          ? CircularProgressIndicator(
+                                              color: Colors.indigo[700],
+                                            )
+                                          : CustomElevatedButton(
+                                              child: Text(
+                                                "Sign Up",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4!
+                                                    .copyWith(
+                                                        color: Colors.black),
+                                              ),
+                                              onPressed: () {
+                                                _checkLogin();
+                                                controller.signUp(
+                                                    _emailController.text,
+                                                    _passwordController.text);
+                                              },
+                                            ),
                                     ),
                                   ),
                                 ],
@@ -184,7 +216,7 @@ class LoginScreen extends GetView<AuthController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Don't have an account, ",
+                                    "Already have an account, ",
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline3!
@@ -192,12 +224,13 @@ class LoginScreen extends GetView<AuthController> {
                                             fontSize: 15.sp,
                                             fontWeight: FontWeight.normal),
                                   ),
-                                  GestureDetector(
+                                  InkWell(
                                     onTap: () {
-                                      Get.offAll(() => SignupScreen());
+                                      Get.offAll(() => LoginScreen(),
+                                          transition: Transition.leftToRight);
                                     },
                                     child: Text(
-                                      "Create now",
+                                      "Login now",
                                       style: TextStyle(
                                           decoration: TextDecoration.underline,
                                           fontSize: 15.sp,
@@ -234,6 +267,13 @@ class LoginScreen extends GetView<AuthController> {
   String? _validatePassword(String value) {
     if (value.length < 6) {
       return "Password must be of 6 characters";
+    }
+    return null;
+  }
+
+  String? _validateRetypePassword(String value) {
+    if (value != _passwordController.text) {
+      return "Passwords do not match";
     }
     return null;
   }
