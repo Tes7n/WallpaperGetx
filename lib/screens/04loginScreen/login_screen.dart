@@ -158,13 +158,13 @@ class LoginScreen extends GetView<AuthController> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(top: 13.h),
-                                    child: Obx(
-                                      () => controller.isLoading.isTrue
-                                          ? CircularProgressIndicator(
-                                              color: Colors.indigo[700],
-                                            )
-                                          : CustomElevatedButton(
-                                              child: Text(
+                                    child: CustomElevatedButton(
+                                      child: Obx(
+                                        () => controller.isLoading.isTrue
+                                            ? CircularProgressIndicator(
+                                                color: Colors.indigo[700],
+                                              )
+                                            : Text(
                                                 "Login",
                                                 style: Theme.of(context)
                                                     .textTheme
@@ -172,13 +172,12 @@ class LoginScreen extends GetView<AuthController> {
                                                     .copyWith(
                                                         color: Colors.black),
                                               ),
-                                              onPressed: () {
-                                                _checkLogin();
-                                                controller.signIn(
-                                                    _emailController.text,
-                                                    _passwordController.text);
-                                              },
-                                            ),
+                                      ),
+                                      onPressed: () {
+                                        _checkLogin();
+                                        controller.signIn(_emailController.text,
+                                            _passwordController.text);
+                                      },
                                     ),
                                   ),
                                 ],
